@@ -1,0 +1,23 @@
+name: CI
+
+on:
+pull_request:
+branches: [ main ]
+push:
+branches: [ feature/ci, main ]
+
+jobs:
+validate-and-build:
+runs-on: ubuntu-latest
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
+
+  - name: Check required project files
+    run: |
+      test -f site/index.html
+      test -f Dockerfile
+      grep -q "nginx:alpine" Dockerfile
+
+  - name: Build Docker image
+    run: docker build -t web-ci:test .
