@@ -17,6 +17,7 @@ steps:
     run: |
       test -f site/index.html
       test -f Dockerfile
+      test -f README.md
       grep -q "nginx:alpine" Dockerfile
 
   - name: Build Docker image
